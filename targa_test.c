@@ -5,8 +5,6 @@
 int main() {
 
   int i,j;
-  int height = 0;
-  int width  = 0;
 
   BYTE buf[100][100][3];
 
@@ -21,11 +19,11 @@ int main() {
     }
  }
 
- 
+
  for (i=0 ; i < 100; i++) {
-       buf[i][i][0] = 255;
-       buf[i][i][1] = 255;
-       buf[i][i][2] = 255;
+       buf[i][i][0] = 255; /* Blue  */
+       buf[i][i][1] = 255; /* Green */
+       buf[i][i][2] = 255; /* Red   */
  }
  
  save_targa("Test1.tga", buf,100,100);
