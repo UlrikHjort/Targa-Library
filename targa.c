@@ -70,39 +70,34 @@ struct {
  ****************************************************************/
 int save_targa(char* filename, BYTE *buf,int width,int height) {
 
+    FILE *fp;
 
- FILE *fp;
+    fp=fopen(filename,"wb");
 
- fp=fopen(filename,"wb");
- header1.char_no=0;
+    header1.char_no=0;
+    header1.color_map=0;
+    header1.image_type=2;
 
- header1.color_map=0;
+    header2.map_origin=0;
+    header2.map_length=0;
+    header3.map_entry_size=0;
 
- header1.image_type=2;
+    header4.x_image_origin=0;
+    header4.y_image_origin=0;
+    header4.image_width=width;
+    header4.image_height=height;
+    header5.pixel_size=24;
+    header5.image_descriptor=32; 
 
- header2.map_origin=0;
- header2.map_length=0;
- header3.map_entry_size=0;
+    fwrite(&header1,1,3,fp);
+    fwrite(&header2,2,2,fp);
+    fwrite(&header3,1,1,fp);
+    fwrite(&header4,2,4,fp);
+    fwrite(&header5,1,2,fp);
 
- header4.x_image_origin=0;
- header4.y_image_origin=0;
- header4.image_width=width;
- header4.image_height=height;
- header5.pixel_size=24;
- header5.image_descriptor=32; 
+    fwrite(buf,1,height*width*3,fp);
+    fclose(fp);
 
-
-
-
- fwrite(&header1,1,3,fp);
- fwrite(&header2,2,2,fp);
- fwrite(&header3,1,1,fp);
- fwrite(&header4,2,4,fp);
- fwrite(&header5,1,2,fp);
-
- fwrite(buf,1,height*width*3,fp);
- fclose(fp);
-
- return 0;
+    return 0;
 }
 
